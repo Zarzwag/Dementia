@@ -6,7 +6,7 @@ Dementia es un juego rogue-like. La muerte es permanente y el morir significa in
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~HISTORIA~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Un misterioso templo olvidado por los dioses, resguarda uno de los
 tesoros más legendarios de la historia: El Relicario Sagrado.
@@ -189,4 +189,25 @@ Vasija Impía:
   40% +20 dementia
   15% +1 pocion
   15% Nada
-Estatua aterradora:
+Estatua Aterradora:
+  40% -5 vida
+  30% -15 dementia
+  15% +15 dementia
+  15% Nada
+Útiles de Sanador:
+  35% +1 pocion
+  35% +10 vida
+  15% +2 pociones
+  15% -5 vida
+Poción Misteriosa:
+  25% +1 Pocion
+  25% +2 Cargas a Hechizo 1, +1 carga a Hechizo 2
+  25% +20 DEMENTIA
+  25% -10 vida
+Figura de Dementia:
+  75% +25 DEMENTIA
+  25% -25 Dementia
+Tomo de Conocimiento:
+  40% Subir de NIVEL
+  35% +10 DEMENTIA
+  25% +25 Dementia

@@ -161,7 +161,7 @@ def showMap(player, nivelActual, nivel1, nivel2, nivel3):
     esquivaDementia=int(player.dementia/10)*5
     dmgDementia=int(player.dementia/10)
     print("\x1b[1;31;45mDementia: "+str(player.dementia)+"/100 (+"+str(dmgDementia)+"pts daño extra/+"+str(esquivaDementia)+"% fallar ataque.)\x1b[m")
-    print("\nLeyenda:\nA: Escalera Hacia Arriba\nB: Escalera Hacia Abajo\nM: Probabilidad de Monstruo\nT: Tesoros\nF: Fogatas de Recuperación\nX: Fogatas Apagadas/Tesoros Saqueados\nV: Cuarto Vacío")
+    print("\nLeyenda:\nA: Escalera Hacia Arriba\nB: Escalera Hacia Abajo\nM: Batalla contra Monstruo\nT: Tesoros\nF: Fogatas de Recuperación\nX: Fogatas Apagadas/Tesoros Saqueados\nV: Victoria Sobre Monstruo")
     opc=input("Hacia qué lado quieres moverte? [A]Izquierda o [D]Derecha: ")
     if opc=="A" or opc=="a":
         if player.cuarto==0:
@@ -180,6 +180,8 @@ def showMap(player, nivelActual, nivel1, nivel2, nivel3):
         combate(player, enemy, nivelActual, nivel1, nivel2, nivel3)
     elif nivelActual.cuartos[player.cuarto]=="T":
         print("Estás frente a un Tesoro")
+        getTesoro(player)
+        nivelActual.cuartos[player.cuarto] = "X"
     elif nivelActual.cuartos[player.cuarto]=="F":
         print("Estás frente a una Fogata")
         descansar=input("Deseas recuperar tus fuerzas (HP: Al máximo, Hechizo 1: +2 cargas, Pociones: +1 y Dementia: -30)? Esto repoblará los cuartos de enemigos y dejará inútil esta fogata, [S]í/[N]o: ")
@@ -192,8 +194,6 @@ def showMap(player, nivelActual, nivel1, nivel2, nivel3):
                     nivelActual.mascara[i]=nivelActual.cuartos[i]
                 i+=1
             nivelActual.cuartos[player.cuarto] = "X"
-            print(nivelActual.cuartos)
-            input("Esperando...")
     elif nivelActual.cuartos[player.cuarto]=="A":
         print("Estás frente a unas Escaleras Hacia Arriba")
         escalera=input("Deseas subir un piso? [S]í/[N]o: ")
@@ -226,6 +226,166 @@ def showMap(player, nivelActual, nivel1, nivel2, nivel3):
     else:
         print("Te encuentras en un cuarto vacío... por ahora.")
     showMap(player, nivelActual, nivel1, nivel2, nivel3)
+
+
+def getTesoro(player):
+    i=0
+    tesoroTable=[17,17,17,17,17,15]
+    choice=random.randint(0,100)
+    while choice>tesoroTable[i]:
+        choice=choice-tesoroTable[i]
+        i=i+1
+    if i==0:
+        print("Has encontrado una Vasija Impía:\n40% +20 dementia\n30% +10 HP\n15% +1 pocion\n15% Nada")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas tomarla? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[40,30,15,15]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.dementia+=20
+                print("Al tocar la Vasija, horribles visiones llenan tu mente... Ha aumentado tu Dementia en +20 pts")
+            elif j==1:
+                player.vida+=10
+                if player.vida>player.vidaMax and player.nombre!="Brujo":
+                    player.vida=player.vidaMax
+                elif player.vida>player.vidaMax+5 and player.nombre=="Brujo":
+                    player.vida=player.vidaMax+5
+                print("Una extraña luz emana de esta Vasija... Te has curado 10 HP")
+            elif j==2:
+                player.pociones+=1
+                print("Dentro de la vasija hay una poción...")
+            elif j==3:
+                print("La Vasija se deshace en tus manos... no ha pasado nada.")
+    elif i==1:
+        print("Has encontrado una Estatua Aterradora:\n40% -5 HP\n30% -15 Dementia\n15% +15 Dementia\n15% Nada")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas Inspeccionarla? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[40,30,15,15]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.vida-=5
+                print("La estatua lanza una flecha directo a tu pecho... Te ha inflingido 5 de daño!")
+            elif j==1:
+                player.dementia-=15
+                if player.dementia<0:
+                    player.dementia=0
+                print("Una fina obra de arte, para aquellos con gustos particulares... Tu Dementia baja en -15 pts")
+            elif j==2:
+                player.dementia+=15
+                print("Una imagen horrible de alguna criatura espantosa... Tu Dementia sube en +15 pts")
+            elif j==3:
+                print("A quién le importa esta tonta estatua?... No pasa nada")
+    elif i==2:
+        print("Has encontrado unos Útiles de Sanador:\n35% +1 pocion\n35% +15 HP\n15% +2 pociones\n15% -5HP")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas Tomarlos? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[35,35,15,15]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.pociones+=1
+                print("Dentro hay los materiales necesarios para preparar una poción... +1 Pocion al inventario")
+            elif j==1:
+                player.vida+=15
+                if player.vida>player.vidaMax:
+                    player.vida=player.vidaMax
+                print("Vendas, pomadas y algo de agua; lo suficiente para cerrar varias heridas... +15 HP")
+            elif j==2:
+                player.pociones+=2
+                print("Alguien dejó dos pociones por aqui, no creo que las necesiten más que yo... +2 Pociones al inventario")
+            elif j==3:
+                player.vida-=5
+                print("Al abrir los útiles se escucha un mecanismo, y un dardo sale disparado... -5 HP")
+    elif i==3:
+        print("Has encontrado una Poción Misteriosa:\n25% +1 Pocion\n25% +2 Cargas Hechizo 1, +1 Carga Hechizo 2\n25% +20 Dementia\n25% -10 HP")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas Tomarla? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[25,25,25,25]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.pociones+=1
+                print("Alguien dejo una pocion por aqui... +1 Pocion al inventario")
+            elif j==1:
+                player.carga1+=2
+                player.carga2+=1
+                print("Una inusual poción de mana yace en este rincón... +2 Cargas Hechizo 1, +1 Carga Hechizo 2")
+            elif j==2:
+                player.dementia+=20
+                print("La poción tiene el sabor de los muertos, una experiencia horrible... +20 pts de Dementia")
+            elif j==3:
+                print("Puaj! Esto es veneno!... -10 HP")
+    elif i==4:
+        print("Has encontrado una Figura de la Diosa Dementia:\n75% +25 Dementia\n25% -25 Dementia")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas Inspeccionarla? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[75,25]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.dementia+=25
+                print("Diosa Dementia, me entrego a ti, toma mi mente... +25 pts Dementia")
+            elif j==1:
+                player.dementia-=25
+                if player.dementia<0:
+                    player.dementia=0
+                print("Destruir esta obra sacrílega es un gran alivio... -25 pts Dementia")
+    elif i==5:
+        print("Has encontrado un Tomo del Conocimiento:\n40% Subir de Nivel\n35% +10 Dementia\n25% +25 Dementia")
+        seleccion="U"
+        while seleccion!="S" and seleccion!="s" and seleccion!="n" and seleccion!="N":
+            seleccion=input("Deseas Inspeccionarlo? [S]í/[N]o: ")
+            print(seleccion)
+        if seleccion=="S" or seleccion=="s":
+            tesoroTable=[40,35,35]
+            choice=random.randint(0,100)
+            j=0
+            while choice>tesoroTable[j]:
+                choice=choice-tesoroTable[j]
+                j=j+1
+            if j==0:
+                player.exp=player.nextLevel
+                print("El conocimiento arcano sellado en este Tomo recorre mi mente... He subido al próximo Nivel")
+                player.levelUp()
+            elif j==1:
+                player.dementia+=10
+                print("Los texto prohibidos de este Tomo no deben ser leídos por nadie mas... +10 pts Dementia")
+            elif j==2:
+                player.dementia+=25
+                print("Un horror cosmico está sellado en este Tomo, y ahora vive en mi mente... +25 pts Dementia")
+    input("El Tesoro ha sido desechado... Enter para continuar...")
 
 def getEnemigo(nivel):
     i=0
@@ -332,8 +492,8 @@ def muerte(player):
     os.remove("archivo2.dem")
     exit()
 
-os.system("clear")
 os.system("cls")
+os.system("clear")
 inicio=menu()
 if inicio=="barb":
     player=heroes.Barbaro()
