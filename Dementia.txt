@@ -1,0 +1,192 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~DEMENTIA~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dementia es un juego rogue-like. La muerte es permanente y el morir significa iniciar desde el principio.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~HISTORIA~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Un misterioso templo olvidado por los dioses, resguarda uno de los
+tesoros más legendarios de la historia: El Relicario Sagrado.
+Te adentrarás a conseguirlo sin caer en la DEMENCIA?
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~Gameplay loop~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cada "Nivel" consiste de varios "Cuartos", que son elegidos al azar,
+entre esta selección de cuartos puede haber enemigos, trampas, tesoros,
+cuartos vacíos y salida al Nivel siguiente. Solo acampando se puede guardar.
+Varios acontecimientos pueden aumentar el nivel de DEMENCIA, que reduce
+probabilidades de golpeo, de encontrar tesoro, aumenta el daño de
+los ataques y habilidades. Al llegar a 100 de DEMENCIA, el jugador muere.
+Al perder el juego, el guardado es BORRADO.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~Cuartos~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enemigo: Un enemigo aleatorio de la lista de enemigos del NIVEL. Cada uno con sus atributos, ataque, habilidades y experiencia.
+Trampas/Tesoros: Objetos curiosos que curan, dañan, aumenta o destruye pociones, aumentan la XP, aumentan o disminuyen la DEMENCIA.
+Cuartos Seguros: Completamente seguros y listos para acampar. Acampar recupera vida, baja drásticamente la DEMENCIA y guarda el juego.
+Salidas: Dan al siguiente nivel.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~Características~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(* = Terminado e Implementado)
+(~ = Semi Terminado e Implementado)
+
+Tres Personajes.......................[*]
+Sistema de Atributos..................[*]
+Sistema de Combate por Turnos.........[*]
+Habilidades Especiales de Personaje...[*]
+Enemigos con Diferentes Atributos.....[*]
+Diferentes Tipos de Enemigos..........[ ]
+Enemigos reaccionan al Combate........[*]
+Habilidades Especiales Enemigos.......[*]
+Sistema de Demencia...................[ ]
+Finales Múltiples.....................[ ]
+Personajes Secretos...................[ ]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~PERSONAJES~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bárbaro: Fuerza bruta, entre más lastimado esté, más daño hace.
+  Atributos:
+    Fuerza: 3
+    Agilidad: 1
+    Sabiduría: 2
+  Habilidades:
+    Hemorragia: El enemigo recibe daño al principio de su turno.
+    Berserker: Sacrifica bastante vida, por hacer bastante daño al enemigo.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Explorador: Agilidad cegadora, probabilidad de hacer daño crítico.
+  Atributos:
+    Fuerza: 2
+    Agilidad: 3
+    Sabiduría: 1
+  Habilidades:
+    Flecha de Hielo: El enemigo pierde turnos.
+    A la Yugular: Pierde turno(s) preparando el tiro, después hace daño masivo.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Brujo: Sabiduría oscura, cada ataque absorbe HP enemiga, puede sobrepasar por 5pts su HP máxima.
+  Atributos:
+    Fuerza: 1
+    Agilidad: 2
+    Sabiduría: 3
+  Habilidades:
+    Ritual de Sangre: Sacrifica poca vida, por daño moderado.
+    Traspasar Alma: Pierde turnos preparando el hechizo, después absorbe toda la HP enemiga.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Pj. Secretos~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Paladín: Fuerza sacra, cada turno en combate, su aura sagrada quema enemigos.
+  Atributos:
+    Fuerza: 3
+    Agilidad: 1
+    Sabiduría: 2
+  Habilidades:
+    Rezo Sacro: Pierde el turno en aumentar el aura sagrada en +2.
+    Castigo: Ataque normal + doble daño aura sagrada, resetea el aura.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Asesina: Agilidad furtiva, cada ataque seguido, aumenta la probabilidad de esquivar.
+  Atributos:
+    Fuerza: 2
+    Agilidad: 3
+    Sabiduría: 1
+  Habilidades:
+    Corte Envenenado: Debilita al enemigo, reduciendo su daño.
+    Manto del Ladrón: Durante varios turnos, aumenta su evasividad a 85%.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bardo: Sabiduría musical, al atacar, puede dormir al enemigo por 2 turnos.
+  Atributos:
+    Fuerza: 1
+    Agilidad: 2
+    Sabiduría: 3
+  Habilidades:
+    Inspiración Bárdica:
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~Enemigos~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~Nivel 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hombre Rata(35%): Agilidad cobarde, buena posibilidad de esquiva, bajo daño, baja vida.
+  Atributos:
+    Fuerza: 1*
+    Agilidad: 2
+    Sabiduría: 1
+  Habilidades:
+    Garras viles: Al atacar. causa 2pts de dementia.
+~~~~~~~~~~
+Esqueleto Viviente(35%): Sabiduría nigromántica, buena posibilidad de aguantar golpes letales, bajo daño, vida media.
+  Atributos:
+    Fuerza: 2
+    Agilidad: 1*
+    Sabiduría: 3
+~~~~~~~~~~
+Golem de Barro(20%): Fuerza bruta, vida buena y alto daño, baja probabilidad de esquivar, baja probabilidad de resistir muerte.
+    Atributos:
+      Fuerza: 3*
+      Agilidad: 1
+      Sabiduría: 1
+~~~~~~~~~
+Necro-Rata(10%): Sabiduría arcana, alta probabilidad de resistir muerte, daño medio, esquive medio, vida media.
+  Atributos:
+    Fuerza: 3
+    Agilidad: 2*
+    Sabiduría: 4
+    Pociones: 1
+  Habilidades:
+    Robo de Sangre: Al atacar normalmente, se cura, así como hacer daño de dementia.
+    Ritual de Sangre: Sacrifica 3 pts de HP para hacer 3pts de daño.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~Nivel 2~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Esqueleto Viviente(): Sabiduría nigromántica, buena posibilidad de aguantar golpes letales, bajo daño, vida media.
+  Atributos:
+    Fuerza: 2
+    Agilidad: 1*
+    Sabiduría: 3
+~~~~~~~~~
+Bestia Explosiva(): Fuerza explosiva, buena vida, poco daño, nula probabilidad de esquiva. Al tener menos de la mitad de vida, intentará explotar.
+  Atributos:
+    Fuerza: 3
+    Agilidad: 0
+    Sabiduría: 1*
+  Habilidades:
+    Explosión Vil: Al tener menos de la mitad de HP, comenzará la secuencia de autodestrucción, de no ser asesinado explotará causando 10pts daño, y 15 pts dementia.
+~~~~~~~~~
+Sombra(): Agilidad nocturna, vida baja, daño medio, altísima probabilidad de esquivar ataques.
+  Atributos:
+    Fuerza: 1
+    Agilidad: 8
+    Sabiduría: 2*
+~~~~~~~~~
+Acólito Dementia(): Sabiduría demencial, daño medio, esquiva buena, alta vida, alta probabilidad de resistir muerte. Prefiere aumentar la dementia, que hacer daño.
+  Atributos:
+    Fuerza: 4
+    Agilidad: 2*
+    Sabiduría: 5
+  Habilidades:
+    Daga maldita: al atacar, daña HP y dementia.
+    Flagelación sacrílega: Genera 5pts de dementia, se daña a sí mismo por 3pts.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~Nivel 3~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~Tesoros~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vasija Impía:
+  30% +10 vida
+  40% +20 dementia
+  15% +1 pocion
+  15% Nada
+Estatua aterradora:
